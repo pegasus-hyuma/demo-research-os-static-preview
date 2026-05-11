@@ -1,0 +1,670 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>東証プライム短期イベントドリブン分析OS | Static Hosted UI Preview</title>
+  <style>
+    :root {
+      --bg: #f6f8fb;
+      --panel: #ffffff;
+      --text: #172033;
+      --muted: #667085;
+      --line: #d9e0ea;
+      --accent: #2563eb;
+      --accent-soft: #eaf1ff;
+      --ok: #147d64;
+      --ok-soft: #e8f7f2;
+      --warn: #9a6700;
+      --warn-soft: #fff7df;
+      --danger: #b42318;
+      --danger-soft: #fff0ee;
+      --shadow: 0 16px 40px rgba(22, 31, 49, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      color: var(--text);
+      background: var(--bg);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Yu Gothic UI", sans-serif;
+      line-height: 1.55;
+    }
+
+    a {
+      color: var(--accent);
+    }
+
+    .shell {
+      display: grid;
+      grid-template-columns: 280px minmax(0, 1fr);
+      min-height: 100vh;
+    }
+
+    .sidebar {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      padding: 24px 18px;
+      background: #101828;
+      color: #f8fafc;
+      overflow: auto;
+    }
+
+    .brand {
+      margin-bottom: 22px;
+      padding-bottom: 18px;
+      border-bottom: 1px solid rgba(255,255,255,0.14);
+    }
+
+    .brand__title {
+      margin: 0;
+      font-size: 18px;
+      line-height: 1.35;
+      letter-spacing: 0;
+    }
+
+    .brand__sub {
+      margin: 8px 0 0;
+      color: #b7c3d6;
+      font-size: 12px;
+    }
+
+    .nav {
+      display: grid;
+      gap: 8px;
+      margin: 18px 0 24px;
+    }
+
+    .nav button {
+      width: 100%;
+      padding: 12px 12px;
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 10px;
+      background: transparent;
+      color: #dce5f3;
+      text-align: left;
+      font: inherit;
+      cursor: pointer;
+    }
+
+    .nav button:hover,
+    .nav button[aria-current="page"] {
+      background: rgba(37, 99, 235, 0.24);
+      border-color: rgba(147, 197, 253, 0.45);
+      color: #ffffff;
+    }
+
+    .side-card {
+      margin-top: 14px;
+      padding: 14px;
+      border-radius: 12px;
+      background: rgba(255,255,255,0.08);
+      color: #d6deeb;
+      font-size: 12px;
+    }
+
+    .content {
+      padding: 30px 32px 56px;
+      max-width: 1240px;
+      width: 100%;
+      margin: 0 auto;
+    }
+
+    .hero {
+      display: grid;
+      gap: 14px;
+      margin-bottom: 20px;
+    }
+
+    .eyebrow {
+      color: var(--accent);
+      font-weight: 700;
+      font-size: 13px;
+    }
+
+    h1,
+    h2,
+    h3 {
+      letter-spacing: 0;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(28px, 4vw, 44px);
+      line-height: 1.16;
+    }
+
+    .lead {
+      max-width: 920px;
+      margin: 0;
+      color: var(--muted);
+      font-size: 16px;
+    }
+
+    .notice-grid,
+    .metrics {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+      margin: 18px 0;
+    }
+
+    .notice {
+      grid-column: span 2;
+      padding: 16px 18px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: var(--panel);
+      box-shadow: var(--shadow);
+    }
+
+    .notice strong {
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    .page {
+      display: none;
+    }
+
+    .page.is-active {
+      display: block;
+    }
+
+    .page-header {
+      margin: 28px 0 16px;
+    }
+
+    .page-header h2 {
+      margin: 0 0 8px;
+      font-size: 27px;
+    }
+
+    .page-header p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .status {
+      display: flex;
+      align-items: start;
+      gap: 12px;
+      padding: 17px 18px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: var(--panel);
+      box-shadow: var(--shadow);
+    }
+
+    .status--normal {
+      border-color: #a6ddc8;
+      background: var(--ok-soft);
+    }
+
+    .status--warning {
+      border-color: #f4d07a;
+      background: var(--warn-soft);
+    }
+
+    .status--review {
+      border-color: #f7b2aa;
+      background: var(--danger-soft);
+    }
+
+    .status__badge {
+      flex: none;
+      padding: 4px 10px;
+      border-radius: 999px;
+      color: #ffffff;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .status--normal .status__badge {
+      background: var(--ok);
+    }
+
+    .status--warning .status__badge {
+      background: var(--warn);
+    }
+
+    .status--review .status__badge {
+      background: var(--danger);
+    }
+
+    .status p {
+      margin: 4px 0 0;
+      color: #475467;
+    }
+
+    .metric {
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: var(--panel);
+      box-shadow: var(--shadow);
+    }
+
+    .metric__label {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .metric__value {
+      margin: 6px 0 3px;
+      font-size: 25px;
+      font-weight: 800;
+      line-height: 1.15;
+    }
+
+    .metric__sub {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .checkpoint {
+      margin: 18px 0;
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: var(--panel);
+    }
+
+    .checkpoint h3,
+    .section h3 {
+      margin: 0 0 10px;
+      font-size: 18px;
+    }
+
+    .checkpoint ul {
+      margin: 0;
+      padding-left: 20px;
+    }
+
+    .section {
+      margin-top: 22px;
+      padding: 20px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: var(--panel);
+      box-shadow: var(--shadow);
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 760px;
+      background: #ffffff;
+    }
+
+    th,
+    td {
+      padding: 11px 12px;
+      border-bottom: 1px solid #edf1f6;
+      text-align: left;
+      white-space: nowrap;
+      font-size: 13px;
+    }
+
+    th {
+      color: #344054;
+      background: #f8fafc;
+      font-weight: 800;
+    }
+
+    tr:last-child td {
+      border-bottom: 0;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      padding: 3px 9px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: #1849a9;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    details {
+      margin-top: 14px;
+      padding: 12px 14px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: #fbfcfe;
+    }
+
+    summary {
+      cursor: pointer;
+      font-weight: 800;
+    }
+
+    pre {
+      overflow-x: auto;
+      padding: 12px;
+      border-radius: 10px;
+      background: #111827;
+      color: #d1fae5;
+      font-size: 12px;
+    }
+
+    .footer-note {
+      margin-top: 34px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    @media (max-width: 900px) {
+      .shell {
+        grid-template-columns: 1fr;
+      }
+
+      .sidebar {
+        position: static;
+        height: auto;
+      }
+
+      .notice-grid,
+      .metrics {
+        grid-template-columns: 1fr;
+      }
+
+      .notice {
+        grid-column: auto;
+      }
+
+      .content {
+        padding: 22px 16px 40px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <aside class="sidebar">
+      <div class="brand">
+        <h1 class="brand__title">東証プライム短期イベントドリブン分析OS</h1>
+        <p class="brand__sub">Demo Research OS | GitHub Pages static preview</p>
+      </div>
+      <nav class="nav" aria-label="静的プレビュー画面">
+        <button type="button" data-page="daily" aria-current="page">日次リプレイ</button>
+        <button type="button" data-page="ranking">ランキング監査</button>
+        <button type="button" data-page="missed">見逃し監査</button>
+        <button type="button" data-page="rejected">見送り候補監査</button>
+        <button type="button" data-page="calibration">スコア校正</button>
+        <button type="button" data-page="quality">データ品質モニター</button>
+      </nav>
+      <div class="side-card">
+        <strong>静的Hosted UI Preview</strong><br>
+        このページはGitHub Pages用の静的プレビューです。Streamlit、SQLite、DB更新、外部通信は行いません。
+      </div>
+      <div class="side-card">
+        <strong>中期方針</strong><br>
+        動的Hosted AppはStreamlit Cloud / Snowflake等で実行します。外部provider認証が必要です。
+      </div>
+    </aside>
+
+    <main class="content">
+      <section class="hero">
+        <span class="eyebrow">URLクリックで見られる完成イメージ</span>
+        <h1>日本語業務SaaS型の監査ダッシュボード preview</h1>
+        <p class="lead">PR21時点のStreamlit UIの見た目と情報階層を、DBなしで確認できる静的ページです。短期はGitHub Pagesで完成イメージを共有し、中期はStreamlit Cloud / Snowflake等で動的Hosted App化します。</p>
+      </section>
+
+      <section class="notice-grid" aria-label="重要な注意">
+        <div class="notice">
+          <strong>非投資助言・読み取り専用</strong>
+          これは投資助言・売買推奨・自動売買ではありません。順位・スコア・事後評価は研究・監査用の記録です。
+        </div>
+        <div class="notice">
+          <strong>架空サンプルデータのみ</strong>
+          表示データは架空サンプルデータです。実在企業・実在銘柄ではありません。外部API、LLM/API、有料データ接続は使いません。
+        </div>
+      </section>
+
+      <section id="daily" class="page is-active">
+        <div class="page-header">
+          <h2>日次リプレイ</h2>
+          <p>strict PIT条件に基づくsample runを確認します。事後評価は混ぜず、当時点で観測可能だった情報だけを表示します。</p>
+        </div>
+        <div class="status status--normal">
+          <span class="status__badge">正常</span>
+          <div>
+            <strong>strict PIT条件に基づくsample runを確認できます。</strong>
+            <p>PIT除外は監査用に記録され、当時点候補には含めていません。</p>
+          </div>
+        </div>
+        <div class="metrics">
+          <div class="metric"><div class="metric__label">当時点の主監査候補</div><div class="metric__value">S001</div><div class="metric__sub">架空銘柄コード</div></div>
+          <div class="metric"><div class="metric__label">PIT対象候補</div><div class="metric__value">5件</div><div class="metric__sub">source_first_seen_ts基準</div></div>
+          <div class="metric"><div class="metric__label">PIT除外</div><div class="metric__value">2件</div><div class="metric__sub">遅延観測 / 訂正後観測</div></div>
+          <div class="metric"><div class="metric__label">LLM/API使用</div><div class="metric__value">0件</div><div class="metric__sub">sample preview</div></div>
+        </div>
+        <div class="checkpoint">
+          <h3>確認ポイント</h3>
+          <ul>
+            <li>情報取得cutoff以前に観測できた候補だけが表示されているか。</li>
+            <li>当時点の主監査候補と判断ログが確認できるか。</li>
+          </ul>
+        </div>
+        <div class="section">
+          <h3>研究対象候補一覧</h3>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>当時点順位（scoring）</th><th>架空銘柄コード</th><th>イベントケースID</th><th>候補分類</th><th>総合スコア</th><th>判断理由</th></tr></thead>
+              <tbody>
+                <tr><td>1位</td><td>S001</td><td>EC-SAMPLE-ALPHA-001</td><td><span class="tag">当時点の主監査候補</span></td><td>87.20</td><td>研究対象として保持</td></tr>
+                <tr><td>2位</td><td>S003</td><td>EC-SAMPLE-GAMMA-001</td><td><span class="tag">Top10監査候補</span></td><td>79.45</td><td>研究対象として保持</td></tr>
+                <tr><td>3位</td><td>S004</td><td>EC-SAMPLE-DELTA-001</td><td><span class="tag">Top10監査候補</span></td><td>68.35</td><td>研究対象として保持</td></tr>
+                <tr><td>4位</td><td>S005</td><td>EC-SAMPLE-EPSILON-001</td><td><span class="tag">Top30監査候補</span></td><td>58.10</td><td>要確認</td></tr>
+                <tr><td>5位</td><td>S006</td><td>EC-SAMPLE-ZETA-001</td><td><span class="tag">見送り</span></td><td>39.20</td><td>見送り</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <details>
+            <summary>詳細JSON preview</summary>
+            <pre>{
+  "run_id": "RUN-SAMPLE-20260402-0800-STRICT",
+  "strict_replay_rule": "source_first_seen_ts <= retrieval_cutoff_ts",
+  "eligible_event_cases": 5,
+  "excluded_late_or_correction": 2
+}</pre>
+          </details>
+        </div>
+      </section>
+
+      <section id="ranking" class="page">
+        <div class="page-header">
+          <h2>ランキング監査</h2>
+          <p>当時点順位と事後評価を並べて、ランキング品質を確認します。事後リターンやregretは後から検証するための監査指標であり、scoringには使っていません。</p>
+        </div>
+        <div class="status status--warning">
+          <span class="status__badge">注意</span>
+          <div>
+            <strong>主監査候補は妥当ですが、順位全体には確認余地があります。</strong>
+            <p>Rank IC（順位相関）がマイナスのため、候補全体の順位関係は追加確認してください。</p>
+          </div>
+        </div>
+        <div class="metrics">
+          <div class="metric"><div class="metric__label">Top1包含</div><div class="metric__value">はい</div><div class="metric__sub">事後トップがTop1に存在</div></div>
+          <div class="metric"><div class="metric__label">Rank IC（順位相関）</div><div class="metric__value">-0.60</div><div class="metric__sub">注意</div></div>
+          <div class="metric"><div class="metric__label">NDCG@3（上位3件品質）</div><div class="metric__value">0.84</div><div class="metric__sub">sample件数に注意</div></div>
+          <div class="metric"><div class="metric__label">regret（事後トップとの差）</div><div class="metric__value">+0.00%</div><div class="metric__sub">監査指標</div></div>
+        </div>
+        <div class="checkpoint">
+          <h3>確認ポイント</h3>
+          <ul>
+            <li>当時点順位と事後順位に大きなズレがないか。</li>
+            <li>Rank ICやregretを過剰解釈していないか。</li>
+          </ul>
+        </div>
+        <div class="section">
+          <h3>当時点順位と事後評価</h3>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>当時点順位（scoring）</th><th>事後順位</th><th>順位差</th><th>架空銘柄コード</th><th>候補分類</th><th>総合スコア</th><th>事後リターン</th><th>事後評価状態</th></tr></thead>
+              <tbody>
+                <tr><td>1位</td><td>1位</td><td>0</td><td>S001</td><td>当時点の主監査候補</td><td>87.20</td><td>+4.18%</td><td>評価完了</td></tr>
+                <tr><td>2位</td><td>4位</td><td>+2</td><td>S003</td><td>Top10監査候補</td><td>79.45</td><td>-1.25%</td><td>評価完了</td></tr>
+                <tr><td>3位</td><td>2位</td><td>-1</td><td>S004</td><td>Top10監査候補</td><td>68.35</td><td>+2.10%</td><td>評価完了</td></tr>
+                <tr><td>4位</td><td>3位</td><td>-1</td><td>S005</td><td>Top30監査候補</td><td>58.10</td><td>+0.72%</td><td>評価完了</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section id="missed" class="page">
+        <div class="page-header">
+          <h2>見逃し監査</h2>
+          <p>事後評価で最上位だった候補が、当時点でどの順位・分類だったかを確認します。理由はルールベースで仮置きしたもので、断定ではありません。</p>
+        </div>
+        <div class="status status--normal">
+          <span class="status__badge">正常</span>
+          <div>
+            <strong>今回sampleでは大きな見逃しは確認されません。</strong>
+            <p>事後トップ候補は当時点の主監査候補として記録されています。</p>
+          </div>
+        </div>
+        <div class="metrics">
+          <div class="metric"><div class="metric__label">事後トップ架空銘柄コード</div><div class="metric__value">S001</div><div class="metric__sub">架空サンプル</div></div>
+          <div class="metric"><div class="metric__label">当時点順位（scoring）</div><div class="metric__value">1位</div><div class="metric__sub">run snapshot内</div></div>
+          <div class="metric"><div class="metric__label">見逃し判定</div><div class="metric__value">見逃しなし</div><div class="metric__sub">監査状態</div></div>
+          <div class="metric"><div class="metric__label">仮置き理由</div><div class="metric__value">該当なし</div><div class="metric__sub">見逃しなし</div></div>
+        </div>
+      </section>
+
+      <section id="rejected" class="page">
+        <div class="page-header">
+          <h2>見送り候補監査</h2>
+          <p>見送りに分類された研究対象候補について、事後評価上の妥当性を確認します。見送りは監査上の分類であり、売買判断ではありません。</p>
+        </div>
+        <div class="status status--normal">
+          <span class="status__badge">正常</span>
+          <div>
+            <strong>今回sampleでは見送り判断に大きな問題は確認されません。</strong>
+            <p>見送り要再検証flagは0件です。</p>
+          </div>
+        </div>
+        <div class="metrics">
+          <div class="metric"><div class="metric__label">見送り候補数</div><div class="metric__value">1件</div><div class="metric__sub">監査対象</div></div>
+          <div class="metric"><div class="metric__label">見送り妥当件数</div><div class="metric__value">1件</div><div class="metric__sub">事後評価上の確認</div></div>
+          <div class="metric"><div class="metric__label">見送り要再検証</div><div class="metric__value">0件</div><div class="metric__sub">flag</div></div>
+          <div class="metric"><div class="metric__label">レビュー状態</div><div class="metric__value">見送り妥当</div><div class="metric__sub">sample</div></div>
+        </div>
+        <div class="section">
+          <h3>見送り候補レビュー</h3>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>架空銘柄コード</th><th>イベントケースID</th><th>候補分類</th><th>事後リターン</th><th>事後順位</th><th>レビュー状態</th><th>見送り要再検証</th><th>見送り妥当性</th></tr></thead>
+              <tbody><tr><td>S006</td><td>EC-SAMPLE-ZETA-001</td><td>見送り</td><td>-2.35%</td><td>5位</td><td>見送り妥当</td><td>いいえ</td><td>はい</td></tr></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section id="calibration" class="page">
+        <div class="page-header">
+          <h2>スコア校正</h2>
+          <p>総合スコアの帯ごとに、事後評価の傾向を確認します。この画面では校正結果を表示するだけで、scoring ruleは変更しません。</p>
+        </div>
+        <div class="status status--warning">
+          <span class="status__badge">注意</span>
+          <div>
+            <strong>sample件数が少ないため、校正判断は保留です。</strong>
+            <p>過剰解釈を避け、次のsample拡張や実データ接続前の設計確認に使います。</p>
+          </div>
+        </div>
+        <div class="section">
+          <h3>score band別の事後評価</h3>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>スコア帯</th><th>スコア帯下限</th><th>スコア帯上限</th><th>候補数</th><th>平均事後リターン</th><th>positive outcome数</th><th>カバー率</th><th>過剰適合注意</th></tr></thead>
+              <tbody>
+                <tr><td>非常に高い</td><td>80</td><td>100</td><td>1件</td><td>+4.18%</td><td>1件</td><td>20%</td><td>注意あり</td></tr>
+                <tr><td>高い</td><td>65</td><td>79.99</td><td>2件</td><td>+0.43%</td><td>1件</td><td>40%</td><td>注意あり</td></tr>
+                <tr><td>中程度</td><td>50</td><td>64.99</td><td>1件</td><td>+0.72%</td><td>1件</td><td>20%</td><td>注意あり</td></tr>
+                <tr><td>低い</td><td>0</td><td>49.99</td><td>1件</td><td>-2.35%</td><td>0件</td><td>20%</td><td>注意あり</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section id="quality" class="page">
+        <div class="page-header">
+          <h2>データ品質モニター</h2>
+          <p>raw、normalized、snapshot、scoring、evaluation、QA関連テーブルの件数と監査状態を確認します。</p>
+        </div>
+        <div class="status status--normal">
+          <span class="status__badge">正常</span>
+          <div>
+            <strong>sample runは監査可能な状態です。</strong>
+            <p>LLM/API使用は0件で、実行スナップショット（run snapshot）、scoring/evaluation件数を確認できます。</p>
+          </div>
+        </div>
+        <div class="metrics">
+          <div class="metric"><div class="metric__label">LLM/API使用件数</div><div class="metric__value">0件</div><div class="metric__sub">audit table</div></div>
+          <div class="metric"><div class="metric__label">PIT除外件数</div><div class="metric__value">2件</div><div class="metric__sub">遅延観測 / 訂正後観測</div></div>
+          <div class="metric"><div class="metric__label">データ品質issue</div><div class="metric__value">0件</div><div class="metric__sub">sample preview</div></div>
+          <div class="metric"><div class="metric__label">snapshot</div><div class="metric__value">1件</div><div class="metric__sub">manifest hashあり</div></div>
+        </div>
+        <div class="section">
+          <h3>監査チェック表</h3>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>確認項目</th><th>状態</th><th>補足</th></tr></thead>
+              <tbody>
+                <tr><td>LLM/API使用</td><td>0件</td><td>外部API/LLM/APIなし</td></tr>
+                <tr><td>PIT除外</td><td>2件</td><td>eligible側に混入なし</td></tr>
+                <tr><td>run snapshot</td><td>1件</td><td>manifest hashあり</td></tr>
+                <tr><td>scoring/evaluation件数</td><td>作成済み</td><td>読み取り専用preview</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <p class="footer-note">Static Hosted UI Preview. This page contains no external assets, no backend, and no network data calls. Dynamic Hosted App化は外部provider認証後の中期対応です。</p>
+    </main>
+  </div>
+
+  <script>
+    const buttons = Array.from(document.querySelectorAll("[data-page]"));
+    const pages = Array.from(document.querySelectorAll(".page"));
+
+    function activatePage(pageId) {
+      buttons.forEach((button) => {
+        button.setAttribute("aria-current", button.dataset.page === pageId ? "page" : "false");
+      });
+      pages.forEach((page) => {
+        page.classList.toggle("is-active", page.id === pageId);
+      });
+      if (location.hash !== "#" + pageId) {
+        history.replaceState(null, "", "#" + pageId);
+      }
+    }
+
+    buttons.forEach((button) => {
+      button.addEventListener("click", () => activatePage(button.dataset.page));
+    });
+
+    const initialPage = location.hash.replace("#", "") || "daily";
+    if (pages.some((page) => page.id === initialPage)) {
+      activatePage(initialPage);
+    }
+  </script>
+</body>
+</html>

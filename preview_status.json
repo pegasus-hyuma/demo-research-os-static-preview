@@ -1,0 +1,28 @@
+{
+  "bundle_generated": true,
+  "bundle_verified": false,
+  "expected_url": "https://pegasus-hyuma.github.io/demo-research-os-static-preview/",
+  "external_api_used": false,
+  "generated_at": "2026-05-11T22:40:03.084919+00:00",
+  "included_files": [
+    "index.html",
+    "README.md",
+    ".nojekyll",
+    "preview_status.json"
+  ],
+  "llm_api_used": false,
+  "mirror_repo": "pegasus-hyuma/demo-research-os-static-preview",
+  "real_issuer_data_used": false,
+  "sample_data_only": true,
+  "source_repo": "pegasus-hyuma/demo-research-os",
+  "source_verification": {
+    "docs_path": "C:\\Users\\hyuma\\source\\demo-research-os\\docs\\github_pages_static_preview.md",
+    "expected_pages_url": "https://pegasus-hyuma.github.io/demo-research-os/",
+    "external_network_calls": 0,
+    "page_count": 6,
+    "pages_source_branch": "main",
+    "pages_source_path": "/docs",
+    "sample_data_only": true,
+    "static_preview_path": "C:\\Users\\hyuma\\source\\demo-research-os\\docs\\index.html"
+  }
+}
