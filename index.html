@@ -448,7 +448,7 @@
         </div>
         <div class="metrics">
           <div class="metric"><div class="metric__label">当時点の主監査候補</div><div class="metric__value">S001</div><div class="metric__sub">架空銘柄コード</div></div>
-          <div class="metric"><div class="metric__label">PIT対象候補</div><div class="metric__value">5件</div><div class="metric__sub">source_first_seen_ts基準</div></div>
+          <div class="metric"><div class="metric__label">PIT対象候補</div><div class="metric__value">5件</div><div class="metric__sub">観測時刻基準</div></div>
           <div class="metric"><div class="metric__label">PIT除外</div><div class="metric__value">2件</div><div class="metric__sub">遅延観測 / 訂正後観測</div></div>
           <div class="metric"><div class="metric__label">LLM/API使用</div><div class="metric__value">0件</div><div class="metric__sub">sample preview</div></div>
         </div>
@@ -477,7 +477,7 @@
             <summary>詳細JSON preview</summary>
             <pre>{
   "run_id": "RUN-SAMPLE-20260402-0800-STRICT",
-  "strict_replay_rule": "source_first_seen_ts <= retrieval_cutoff_ts",
+  "pit_rule_label": "観測時刻がcutoff以前の情報だけを採用",
   "eligible_event_cases": 5,
   "excluded_late_or_correction": 2
 }</pre>
@@ -523,6 +523,15 @@
               </tbody>
             </table>
           </div>
+          <details>
+            <summary>ランキング監査指標の詳細</summary>
+            <pre>{
+  "top1_containment": "はい",
+  "rank_ic_label": "注意",
+  "ndcg_at_3": 0.84,
+  "regret_label": "+0.00%"
+}</pre>
+          </details>
         </div>
       </section>
 
@@ -544,6 +553,30 @@
           <div class="metric"><div class="metric__label">見逃し判定</div><div class="metric__value">見逃しなし</div><div class="metric__sub">監査状態</div></div>
           <div class="metric"><div class="metric__label">仮置き理由</div><div class="metric__value">該当なし</div><div class="metric__sub">見逃しなし</div></div>
         </div>
+        <div class="checkpoint">
+          <h3>確認ポイント</h3>
+          <ul>
+            <li>事後トップ候補が当時点でどこにいたか。</li>
+            <li>仮置き理由を断定として扱っていないか。</li>
+          </ul>
+        </div>
+        <div class="section">
+          <h3>見逃し監査レビュー</h3>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>事後トップ架空銘柄コード</th><th>事後トップイベントケースID</th><th>当時点順位（scoring）</th><th>当時点分類（scoring）</th><th>見逃し判定</th><th>仮置き理由</th></tr></thead>
+              <tbody><tr><td>S001</td><td>EC-SAMPLE-ALPHA-001</td><td>1位</td><td>当時点の主監査候補</td><td>見逃しなし</td><td>該当なし</td></tr></tbody>
+            </table>
+          </div>
+          <details>
+            <summary>見逃し監査の詳細</summary>
+            <pre>{
+  "top_outcome": "S001",
+  "missed_winner_flag": "見逃しなし",
+  "provisional_reason": "該当なし"
+}</pre>
+          </details>
+        </div>
       </section>
 
       <section id="rejected" class="page">
@@ -564,6 +597,13 @@
           <div class="metric"><div class="metric__label">見送り要再検証</div><div class="metric__value">0件</div><div class="metric__sub">flag</div></div>
           <div class="metric"><div class="metric__label">レビュー状態</div><div class="metric__value">見送り妥当</div><div class="metric__sub">sample</div></div>
         </div>
+        <div class="checkpoint">
+          <h3>確認ポイント</h3>
+          <ul>
+            <li>見送り候補が事後評価上も弱かったか。</li>
+            <li>見送り要再検証のflagが立っていないか。</li>
+          </ul>
+        </div>
         <div class="section">
           <h3>見送り候補レビュー</h3>
           <div class="table-wrap">
@@ -572,6 +612,14 @@
               <tbody><tr><td>S006</td><td>EC-SAMPLE-ZETA-001</td><td>見送り</td><td>-2.35%</td><td>5位</td><td>見送り妥当</td><td>いいえ</td><td>はい</td></tr></tbody>
             </table>
           </div>
+          <details>
+            <summary>見送り候補監査の詳細</summary>
+            <pre>{
+  "rejected_candidates": 1,
+  "false_rejection": "いいえ",
+  "review_status": "見送り妥当"
+}</pre>
+          </details>
         </div>
       </section>
 
@@ -587,6 +635,19 @@
             <p>過剰解釈を避け、次のsample拡張や実データ接続前の設計確認に使います。</p>
           </div>
         </div>
+        <div class="metrics">
+          <div class="metric"><div class="metric__label">総候補数</div><div class="metric__value">5件</div><div class="metric__sub">sample preview</div></div>
+          <div class="metric"><div class="metric__label">スコア帯数</div><div class="metric__value">4帯</div><div class="metric__sub">非常に高い / 高い / 中程度 / 低い</div></div>
+          <div class="metric"><div class="metric__label">最高スコア帯の平均事後リターン</div><div class="metric__value">+4.18%</div><div class="metric__sub">1件のみ</div></div>
+          <div class="metric"><div class="metric__label">過剰適合注意</div><div class="metric__value">4件</div><div class="metric__sub">sample件数に注意</div></div>
+        </div>
+        <div class="checkpoint">
+          <h3>確認ポイント</h3>
+          <ul>
+            <li>スコア帯ごとの件数が少なすぎないか。</li>
+            <li>過剰適合注意を踏まえて表示を読む。</li>
+          </ul>
+        </div>
         <div class="section">
           <h3>score band別の事後評価</h3>
           <div class="table-wrap">
@@ -600,6 +661,14 @@
               </tbody>
             </table>
           </div>
+          <details>
+            <summary>スコア校正の詳細</summary>
+            <pre>{
+  "score_bands": 4,
+  "sample_size_note": "sample件数が少ないため校正判断は保留",
+  "overfitting_warning": "注意あり"
+}</pre>
+          </details>
         </div>
       </section>
 
@@ -621,6 +690,13 @@
           <div class="metric"><div class="metric__label">データ品質issue</div><div class="metric__value">0件</div><div class="metric__sub">sample preview</div></div>
           <div class="metric"><div class="metric__label">snapshot</div><div class="metric__value">1件</div><div class="metric__sub">manifest hashあり</div></div>
         </div>
+        <div class="checkpoint">
+          <h3>確認ポイント</h3>
+          <ul>
+            <li>LLM/API使用件数が0件か。</li>
+            <li>PIT除外件数とデータ品質issueを確認する。</li>
+          </ul>
+        </div>
         <div class="section">
           <h3>監査チェック表</h3>
           <div class="table-wrap">
@@ -634,6 +710,15 @@
               </tbody>
             </table>
           </div>
+          <details>
+            <summary>データ品質モニターの詳細</summary>
+            <pre>{
+  "llm_api_usage": "0件",
+  "pit_excluded": "2件",
+  "data_quality_issue": "0件",
+  "public_preview_scope": "静的UI Previewのみ"
+}</pre>
+          </details>
         </div>
       </section>
 
