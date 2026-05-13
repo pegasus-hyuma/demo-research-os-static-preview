@@ -3,7 +3,7 @@
   "bundle_verified": false,
   "expected_url": "https://pegasus-hyuma.github.io/demo-research-os-static-preview/",
   "external_api_used": false,
-  "generated_at": "2026-05-13T13:13:30.142453+00:00",
+  "generated_at": "2026-05-13T13:39:38.977634+00:00",
   "included_files": [
     "index.html",
     "README.md",
@@ -12,7 +12,12 @@
   ],
   "llm_api_used": false,
   "mirror_repo": "pegasus-hyuma/demo-research-os-static-preview",
+  "public_preview_url": "https://pegasus-hyuma.github.io/demo-research-os-static-preview/",
   "real_issuer_data_used": false,
+  "release_doc": "docs/releases/static_preview_v0_1_0.md",
+  "release_locked": true,
+  "release_name": "Demo Research OS Static Hosted UI Preview v0.1.0",
+  "release_version": "v0.1.0",
   "sample_data_only": true,
   "source_repo": "pegasus-hyuma/demo-research-os",
   "source_verification": {

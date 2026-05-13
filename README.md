@@ -5,6 +5,7 @@ This repository is a public static UI preview mirror for Demo Research OS.
 - Source project: `pegasus-hyuma/demo-research-os`
 - Static preview mirror: `pegasus-hyuma/demo-research-os-static-preview`
 - Expected URL: `https://pegasus-hyuma.github.io/demo-research-os-static-preview/`
+- Release: `Demo Research OS Static Hosted UI Preview v0.1.0`
 - Content: static UI preview only
 - Data: sample data only
 - External API: none
