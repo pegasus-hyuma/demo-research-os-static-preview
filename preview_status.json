@@ -1,4 +1,7 @@
 {
+  "adapter_architecture_doc": "docs/data_adapter_architecture.md",
+  "adapter_contract_doc": "docs/data_contracts/adapter_observation_contract.md",
+  "adapter_contract_status": "out/qa_reports/data_adapter_contract_status_latest.json",
   "adr_dir": "docs/adr",
   "bundle_generated": true,
   "bundle_verified": false,
@@ -6,7 +9,7 @@
   "dynamic_provider_matrix_doc": "docs/dynamic_hosted_app_provider_matrix.md",
   "expected_url": "https://pegasus-hyuma.github.io/demo-research-os-static-preview/",
   "external_api_used": false,
-  "generated_at": "2026-05-14T13:50:13.330516+00:00",
+  "generated_at": "2026-05-14T14:38:07.301080+00:00",
   "included_files": [
     "index.html",
     "README.md",
@@ -19,8 +22,8 @@
   "public_preview_url": "https://pegasus-hyuma.github.io/demo-research-os-static-preview/",
   "real_issuer_data_used": false,
   "recommended_dynamic_provider": "Streamlit Community Cloud",
-  "recommended_next_pr": "PR34",
-  "recommended_next_pr_title": "Data Adapter Interface & Mock Contract",
+  "recommended_next_pr": "PR35",
+  "recommended_next_pr_title": "Point-in-Time Data Source Policy",
   "release_doc": "docs/releases/static_preview_v0_1_0.md",
   "release_locked": true,
   "release_name": "Demo Research OS Static Hosted UI Preview v0.1.0",
