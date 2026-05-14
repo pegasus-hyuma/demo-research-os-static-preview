@@ -11,7 +11,7 @@
   "dynamic_provider_matrix_doc": "docs/dynamic_hosted_app_provider_matrix.md",
   "expected_url": "https://pegasus-hyuma.github.io/demo-research-os-static-preview/",
   "external_api_used": false,
-  "generated_at": "2026-05-14T15:33:53.614887+00:00",
+  "generated_at": "2026-05-14T15:37:08.883130+00:00",
   "included_files": [
     "index.html",
     "README.md",
