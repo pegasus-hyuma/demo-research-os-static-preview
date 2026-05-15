@@ -20,7 +20,7 @@
   "dynamic_provider_matrix_doc": "docs/dynamic_hosted_app_provider_matrix.md",
   "expected_url": "https://pegasus-hyuma.github.io/demo-research-os-static-preview/",
   "external_api_used": false,
-  "generated_at": "2026-05-15T04:02:10.385502+00:00",
+  "generated_at": "2026-05-15T12:55:17.314929+00:00",
   "github_actions_artifact_safety_doc": "docs/github_actions_artifact_safety_policy.md",
   "github_actions_artifact_safety_policy_doc": "docs/github_actions_artifact_safety_policy.md",
   "github_actions_dry_run_scheduler_readiness": "completed",
