@@ -46,7 +46,7 @@
   "expected_url": "https://pegasus-hyuma.github.io/demo-research-os-static-preview/",
   "external_api_used": false,
   "failure_summary_available": true,
-  "generated_at": "2026-05-15T22:53:37.140267+00:00",
+  "generated_at": "2026-05-15T22:59:56.927715+00:00",
   "github_actions_artifact_safety_doc": "docs/github_actions_artifact_safety_policy.md",
   "github_actions_artifact_safety_policy_doc": "docs/github_actions_artifact_safety_policy.md",
   "github_actions_dry_run_scheduler_readiness": "completed",
