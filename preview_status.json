@@ -56,7 +56,7 @@
   "failure_summary_available": true,
   "first_private_runtime_real_data_trial_guard": "completed",
   "future_cadence_defined": true,
-  "generated_at": "2026-05-18T12:55:54.089481+00:00",
+  "generated_at": "2026-05-18T13:24:27.704405+00:00",
   "github_actions_artifact_safety_doc": "docs/github_actions_artifact_safety_policy.md",
   "github_actions_artifact_safety_policy_doc": "docs/github_actions_artifact_safety_policy.md",
   "github_actions_dry_run_scheduler_readiness": "completed",
