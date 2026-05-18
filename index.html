@@ -434,6 +434,29 @@
         </div>
       </section>
 
+      <section class="section" aria-label="scheduled status">
+        <h3>Scheduled status</h3>
+        <div class="metrics">
+          <div class="metric"><div class="metric__label">Scheduled run</div><div class="metric__value">enabled</div><div class="metric__sub">GitHub Actions limited schedule</div></div>
+          <div class="metric"><div class="metric__label">Scheduled mode</div><div class="metric__value">daily_demo_mock</div><div class="metric__sub">schedule event only</div></div>
+          <div class="metric"><div class="metric__label">Scope</div><div class="metric__value">mock-only</div><div class="metric__sub">manual_csv / real_data / live_adapter / production blocked</div></div>
+          <div class="metric"><div class="metric__label">Holiday calendar</div><div class="metric__value">not connected</div><div class="metric__sub">market calendar limitation</div></div>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Check</th><th>Status</th><th>Public mirror note</th></tr></thead>
+            <tbody>
+              <tr><td>Workflow dispatch</td><td>daily_demo_mock / one_month_mock</td><td>safe status metadata only</td></tr>
+              <tr><td>External API</td><td>not used</td><td>no provider connection</td></tr>
+              <tr><td>LLM/API</td><td>not used</td><td>fixed dashboard-safe copy</td></tr>
+              <tr><td>Live fetch</td><td>not used</td><td>no network runtime in preview</td></tr>
+              <tr><td>Real data scheduled run</td><td>blocked</td><td>raw/private artifacts excluded</td></tr>
+              <tr><td>Transaction execution</td><td>not used</td><td>read-only demo operation</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
       <section id="daily" class="page is-active">
         <div class="page-header">
           <h2>日次リプレイ</h2>
