@@ -77,7 +77,7 @@
   "future_calendar_integration_required": true,
   "future_source_contracts_count": 7,
   "future_source_matrix_available": true,
-  "generated_at": "2026-05-20T01:45:43.294209+00:00",
+  "generated_at": "2026-05-20T03:04:26.353165+00:00",
   "github_actions_artifact_safety_doc": "docs/github_actions_artifact_safety_policy.md",
   "github_actions_artifact_safety_policy_doc": "docs/github_actions_artifact_safety_policy.md",
   "github_actions_dry_run_scheduler_readiness": "completed",
