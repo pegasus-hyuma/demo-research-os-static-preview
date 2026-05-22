@@ -449,6 +449,8 @@
           <div class="metric"><div class="metric__label">Archive review</div><div class="metric__value">ready</div><div class="metric__sub">summary / failure / checklist</div></div>
           <div class="metric"><div class="metric__label">Adapter stub</div><div class="metric__value">stub-only</div><div class="metric__sub">synthetic PIT fixture validated</div></div>
           <div class="metric"><div class="metric__label">Private runtime stub replay</div><div class="metric__value">synthetic-only replay</div><div class="metric__sub">boundary guard passed</div></div>
+          <div class="metric"><div class="metric__label">Approval package</div><div class="metric__value">prepared</div><div class="metric__sub">human review only</div></div>
+          <div class="metric"><div class="metric__label">Unlock review</div><div class="metric__value">not unlocked</div><div class="metric__sub">decision not approved</div></div>
         </div>
         <div class="table-wrap">
           <table>
@@ -470,7 +472,10 @@
               <tr><td>Private runtime stub replay</td><td>synthetic-only</td><td>PR57 safe replay summary / negative fixture rejection</td></tr>
               <tr><td>Stub replay review gate</td><td>passed</td><td>PR58 synthetic-only release gate / adapter boundary gate</td></tr>
               <tr><td>Adapter boundary acceptance</td><td>accepted handoff</td><td>PR59 synthetic-only acceptance / manual approval gate</td></tr>
-              <tr><td>Next boundary</td><td>PR60</td><td>approval package / boundary unlock review</td></tr>
+              <tr><td>Approval package</td><td>prepared for human review</td><td>PR60 safe approval status only</td></tr>
+              <tr><td>Boundary unlock review</td><td>completed but not unlocked</td><td>unlock decision not approved / execution not executed</td></tr>
+              <tr><td>Real capability unlock</td><td>blocked</td><td>external provider, credentials, live fetch, and real data connection remain blocked</td></tr>
+              <tr><td>Next boundary</td><td>PR61</td><td>approval decision record / unlock preconditions review</td></tr>
             </tbody>
           </table>
         </div>
