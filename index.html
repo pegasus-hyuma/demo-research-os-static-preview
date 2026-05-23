@@ -451,6 +451,8 @@
           <div class="metric"><div class="metric__label">Private runtime stub replay</div><div class="metric__value">synthetic-only replay</div><div class="metric__sub">boundary guard passed</div></div>
           <div class="metric"><div class="metric__label">Approval package</div><div class="metric__value">prepared</div><div class="metric__sub">human review only</div></div>
           <div class="metric"><div class="metric__label">Unlock review</div><div class="metric__value">not unlocked</div><div class="metric__sub">decision not approved</div></div>
+          <div class="metric"><div class="metric__label">Decision record</div><div class="metric__value">not approved</div><div class="metric__sub">implementation locked</div></div>
+          <div class="metric"><div class="metric__label">Unlock preconditions</div><div class="metric__value">future review</div><div class="metric__sub">not sufficient for unlock</div></div>
         </div>
         <div class="table-wrap">
           <table>
@@ -474,8 +476,10 @@
               <tr><td>Adapter boundary acceptance</td><td>accepted handoff</td><td>PR59 synthetic-only acceptance / manual approval gate</td></tr>
               <tr><td>Approval package</td><td>prepared for human review</td><td>PR60 safe approval status only</td></tr>
               <tr><td>Boundary unlock review</td><td>completed but not unlocked</td><td>unlock decision not approved / execution not executed</td></tr>
+              <tr><td>Approval decision record</td><td>recorded as not approved</td><td>PR61 safe decision status only</td></tr>
+              <tr><td>Unlock preconditions</td><td>completed for future review</td><td>preconditions not sufficient / gaps remain open</td></tr>
               <tr><td>Real capability unlock</td><td>blocked</td><td>external provider, credentials, live fetch, and real data connection remain blocked</td></tr>
-              <tr><td>Next boundary</td><td>PR61</td><td>approval decision record / unlock preconditions review</td></tr>
+              <tr><td>Next boundary</td><td>PR62</td><td>unlock preconditions gap closure / approval workflow dry run</td></tr>
             </tbody>
           </table>
         </div>
